@@ -1,4 +1,4 @@
-import { createVoiceRing } from './ring.js';
+import { createVoiceRing } from './ring.js?v=805f66bff1c6';
 import { raisePitch } from './pitch.js';
 import { createHallEffect, createDistortionEffect } from './effects.js';
 const start = document.querySelector('#start'), stop = document.querySelector('#stop');

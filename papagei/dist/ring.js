@@ -56,7 +56,7 @@ export function createVoiceRing(element) {
       const center = position(time - lag);
       const segmentRadius = headRadius * taper;
       segments[j].setAttribute('d', contour(center, segmentRadius, time - lag, (3 + energy * 16) * taper * 2.25));
-      segments[j].setAttribute('style', `opacity:${(.4 + .45 * taper).toFixed(3)};stroke-width:${(1.8 + 1.4 * taper).toFixed(2)}`);
+      segments[j].setAttribute('style', `opacity:${(.14 + .71 * Math.pow(1 - fraction * fraction, 1.4)).toFixed(3)};stroke-width:${(1.8 + 1.4 * taper).toFixed(2)}`);
     }
     for (let layer = 0; layer < paths.length; layer++) {
       paths[layer].setAttribute('d', contour(head, headRadius + layer * 9, time, (3 + energy * 16) * 2.25, layer));
