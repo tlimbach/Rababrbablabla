@@ -8,11 +8,21 @@ export function createVoiceRing(element) {
     tail.appendChild(path);
     return path;
   });
-  // Sample one continuous route at delayed times, so the tail follows the head.
+  // The body has its own long spine instead of piling up old head positions.
   const position = time => ({
-    x: 400 + 65 * Math.sin(time * .23) + 20 * Math.sin(time * .49 + 1),
-    y: 300 + 20 * Math.sin(time * .31 + .7) + 8 * Math.cos(time * .57)
+    x: 500 + 25 * Math.sin(time * .23),
+    y: 280 + 18 * Math.sin(time * .31 + .7)
   });
+  const spine = (head, fraction, time) => {
+    const direction = -.12 + .14 * Math.sin(time * .19);
+    const along = fraction * 460;
+    const bend = 85 * Math.sin(fraction * Math.PI * 2 - time * .65)
+      * Math.sin(fraction * Math.PI);
+    return {
+      x: head.x - along * Math.cos(direction) - bend * Math.sin(direction),
+      y: head.y - along * Math.sin(direction) + bend * Math.cos(direction)
+    };
+  };
   const contour = (center, radius, time, strength, layer = 0) => {
     let d = '';
     for (let i = 0; i < 120; i++) {
@@ -42,6 +52,11 @@ export function createVoiceRing(element) {
     if (!reducedMotion.matches) elapsed += dt;
     const time = reducedMotion.matches ? 0 : elapsed;
     const energy = reducedMotion.matches ? 0 : level;
+    // Brighten the head with the measured microphone or playback level.
+    const glow = reducedMotion.matches ? 0 : level;
+    paths[0].style.filter = `brightness(${(1 + glow * 1.5).toFixed(2)}) drop-shadow(0 0 ${4 + glow * 5}px currentColor) drop-shadow(0 0 ${12 + glow * 18}px currentColor) drop-shadow(0 0 ${24 + glow * 32}px currentColor)`;
+    paths[0].style.strokeWidth = (3.2 + glow * 2.8).toFixed(2);
+
     // A visible five-second breath at rest; speech takes over as energy rises.
     const breath = Math.sin(time * (2 * Math.PI / 5));
     const breathDepth = 11 * (1 - energy) + 2 * energy;
@@ -53,7 +68,7 @@ export function createVoiceRing(element) {
       const fraction = (segments.length - j) / segments.length;
       const lag = fraction * 16;
       const taper = Math.pow(1 - fraction * .97, 1.1);
-      const center = position(time - lag);
+      const center = spine(head, fraction, time);
       const segmentRadius = headRadius * taper;
       segments[j].setAttribute('d', contour(center, segmentRadius, time - lag, (3 + energy * 16) * taper * 2.25));
       segments[j].setAttribute('style', `opacity:${(.14 + .71 * Math.pow(1 - fraction * fraction, 1.4)).toFixed(3)};stroke-width:${(1.8 + 1.4 * taper).toFixed(2)}`);
