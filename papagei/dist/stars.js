@@ -12,6 +12,7 @@ if (ctx) {
     const life = changing ? random(2.5, 7) : random(16, 40);
     return {
       x: Math.random(), y: Math.random(),
+      depth: .55 + size * 1.45,
       radius: size < .86 ? random(.35, .85) : size < .98 ? random(.9, 1.4) : random(1.5, 2.1),
       color: color < .1 ? '194,174,232' : color < .4 ? '151,160,175' : '235,240,249',
       brightness: changing ? random(.65, 1) : random(.25, .7), life,
@@ -26,6 +27,22 @@ if (ctx) {
     stars.forEach((star, i) => {
       if (!motion.matches) star.age += dt;
       if (star.age >= star.life) star = stars[i] = makeStar();
+      if (!motion.matches && dt > 0 && width > 0 && height > 0) {
+        // Shared rotation plus a diagonal drift; nearer stars move faster.
+        const px = star.x * width, py = star.y * height;
+        // A gentle coherent orbit, with a little drift.
+        const angle = .027 * dt;
+        const cosine = Math.cos(angle), sine = Math.sin(angle);
+        const relativeX = px - width / 2, relativeY = py - height / 2;
+        const dx = relativeX * cosine - relativeY * sine - relativeX + 4 * star.depth * dt;
+        const dy = relativeX * sine + relativeY * cosine - relativeY + 1.5 * star.depth * dt;
+        // Wrap just beyond the viewport, so no empty edge opens up.
+        const margin = 16;
+        const wrap = (value, span) => ((value + margin) % (span + 2 * margin)
+          + span + 2 * margin) % (span + 2 * margin) - margin;
+        star.x = wrap(px + dx, width) / width;
+        star.y = wrap(py + dy, height) / height;
+      }
       // Most of the lifetime is clearly visible; short transitions make turnover noticeable.
       const fade = motion.matches ? .75 : Math.max(0, Math.min(1,
         star.age / star.fadeIn, (star.life - star.age) / star.fadeOut));
