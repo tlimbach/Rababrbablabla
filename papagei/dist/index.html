@@ -6,8 +6,10 @@
 <title>Plapper · Dein kleiner Papagei</title>
 <link rel="stylesheet" href="style.css">
 <body class="production-page">
+<canvas id="starfield" aria-hidden="true"></canvas>
 <main class="production-view">
   <section class="card" aria-label="Nachplappernder Papagei">
+    <div class="worm-stage">
     <div id="voice-ring" class="voice-ring" aria-hidden="true">
       <svg viewBox="0 0 800 600" focusable="false">
         <g class="worm-tail"></g>
@@ -16,11 +18,14 @@
         <path class="ring-halo" d="M262,160a102,102 0 1,0 -204,0a102,102 0 1,0 204,0Z"/>
       </svg>
     </div>
+      <button id="start" class="play-overlay" aria-label="Start – Mikrofon aktivieren"><span aria-hidden="true">▶</span></button>
+    </div>
     <div class="sr-only" role="status" aria-live="polite"><span id="status">Bereit, wenn du es bist.</span></div>
     <p id="hint" class="sr-only">Drück auf Start und sag etwas.<br>Nach einer kurzen Pause bin ich dran.</p>
-    <div class="buttons"><button id="start" aria-label="Start"><span aria-hidden="true">▶</span></button><button id="stop" aria-label="Stop" disabled><span aria-hidden="true">■</span></button></div>
+    <div class="buttons"><button id="stop" aria-label="Stop" disabled><span aria-hidden="true">■</span></button></div>
   </section>
 </main>
 <script type="module" src="app.js"></script>
+<script type="module" src="stars.js"></script>
 </body>
 </html>
