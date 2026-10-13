@@ -134,3 +134,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Buildless browser source (not generated output)
+!papagei/dist/
+!papagei/dist/**
+papagei/.openai/

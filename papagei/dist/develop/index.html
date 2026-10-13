@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f2e9">
+<title>Plapper · Stimmenlabor</title>
+<link rel="stylesheet" href="../style.css">
+<main class="developer-view">
+  <header><span class="brand">plapper<span class="dot">●</span></span><span>STIMMENLABOR</span></header>
+  <section class="card" aria-label="Nachplappernder Papagei">
+    <div class="eyebrow">DU REDEST. ICH PLAPPERE.</div>
+    <h1>Na, was gibt’s<br>zu erzählen?</h1>
+    <div class="bird" aria-hidden="true">🦜</div>
+    <div class="status" role="status" aria-live="polite"><span id="light"></span><span id="status">Bereit, wenn du es bist.</span></div>
+    <p id="hint">Drück auf Start und sag etwas.<br>Nach einer kurzen Pause bin ich dran.</p>
+    <div class="buttons"><button id="start">▶ <span>Start</span></button><button id="stop" disabled>■ <span>Stop</span></button></div>
+    <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <fieldset class="effects">
+      <legend>Dein Stimmenlabor</legend>
+      <div class="control"><label for="speed">Geschwindigkeit</label><output id="speed-value" for="speed">0,80×</output><input id="speed" type="range" min="0.5" max="2" step="0.05" value="0.8"><div class="ends"><span>Langsam · 0,5×</span><span>Schnell · 2×</span></div></div>
+      <div class="control"><label for="pitch">Tonhöhe</label><output id="pitch-value" for="pitch">+4 Halbtöne</output><input id="pitch" type="range" min="-12" max="20" step="1" value="4"><div class="ends"><span>Tiefer · −12</span><span>Höher · +20</span></div></div>
+      <div class="control"><label for="hall">Hall / Chorus</label><output id="hall-value" for="hall">Aus</output><input id="hall" type="range" min="0" max="200" step="1" value="0"><div class="ends"><span>Aus</span><span>200 %</span></div></div>
+      <div class="control"><label for="distortion">Verzerrung</label><output id="distortion-value" for="distortion">Aus</output><input id="distortion" type="range" min="0" max="200" step="1" value="0"><div class="ends"><span>Aus</span><span>200 %</span></div></div>
+      <p class="control-hint">Tempo und Tonhöhe gelten ab der nächsten Wiedergabe. Hall und Verzerrung hörst du sofort.</p>
+      <label class="mode-label" for="playback-mode">Wiedergabemodus</label>
+      <select id="playback-mode" aria-describedby="mode-hint">
+        <option value="individual">Individuell</option>
+        <option value="random-replay" selected>Beim Wiederholen zufällig einstellen</option>
+        <option value="production">Produktionsmodus</option>
+      </select>
+      <p id="mode-hint" class="control-hint">Individuell: deine Reglerwerte. Beim Wiederholen zufällig: neue Werte nur per Knopfdruck. Produktionsmodus: neue Werte bei jedem Nachplappern und Wiederholen.</p>
+      <button id="replay" disabled>↻ Satz noch einmal hören</button>
+      <p class="control-hint">Zufallsbereiche: Tempo 0,75–0,90× · Tonhöhe +12–16 · Hall 20–40 % · Verzerrung 10–30 %. Die Regler zeigen die gewählten Werte.</p>
+    </fieldset>
+  </section>
+  <footer>Deine Stimme. Dein Papageienklang.<br><span>Deine Stimme bleibt hier in deinem Browser.</span></footer>
+</main>
+<script type="module" src="../app.js"></script>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f2e9">
+<title>Plapper · Dein kleiner Papagei</title>
+<link rel="stylesheet" href="style.css">
+<main class="production-view">
+  <section class="card" aria-label="Nachplappernder Papagei">
+    <div id="voice-ring" class="voice-ring" aria-hidden="true">
+      <svg viewBox="-30 -30 380 380" focusable="false">
+        <path class="ring-main" d="M248,160a88,88 0 1,0 -176,0a88,88 0 1,0 176,0Z"/>
+        <path class="ring-echo" d="M255,160a95,95 0 1,0 -190,0a95,95 0 1,0 190,0Z"/>
+        <path class="ring-halo" d="M262,160a102,102 0 1,0 -204,0a102,102 0 1,0 204,0Z"/>
+      </svg>
+    </div>
+    <div class="sr-only" role="status" aria-live="polite"><span id="status">Bereit, wenn du es bist.</span></div>
+    <p id="hint" class="sr-only">Drück auf Start und sag etwas.<br>Nach einer kurzen Pause bin ich dran.</p>
+    <div class="buttons"><button id="start" aria-label="Start"><span aria-hidden="true">▶</span></button><button id="stop" aria-label="Stop" disabled><span aria-hidden="true">■</span></button></div>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</html>
