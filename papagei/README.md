@@ -10,7 +10,7 @@ python3 -m http.server 8080 --bind 127.0.0.1 --directory dist
 
 Zwei getrennte Ansichten verwenden dieselbe Audioverarbeitung:
 
-- **http://localhost:8080/**: Benutzeroberfläche mit einem gewellten, lautstärkereaktiven Ring, Start und Stop. Grün zeigt Zuhören, Orange die Wiedergabe an. Im Ruhezustand bewegt sich der Ring sanft; bei reduzierter Bewegung im System bleibt die Kontur ruhig. Der Produktionsmodus würfelt bei jedem Satz automatisch Werte aus den festgelegten Bereichen aus. Keine Regler oder Entwicklungsbedienelemente.
+- **http://localhost:8080/**: Benutzeroberfläche mit einem wandernden, lautstärkereaktiven Wurm, Start und Stop. Ein gewellter Kopf zieht einen aus 36 sich verjüngenden Konturen bestehenden Schweif hinter sich her. Grün zeigt Zuhören, Orange die Wiedergabe an. Im Ruhezustand gleitet und atmet der Wurm sanft; bei reduzierter Bewegung im System bleibt die Kontur ruhig. Der Produktionsmodus würfelt bei jedem Satz automatisch Werte aus den festgelegten Bereichen aus. Keine Regler oder Entwicklungsbedienelemente.
 - **http://localhost:8080/develop/**: Stimmenlabor mit allen Reglern, Modusauswahl und Wiederholen-Taste.
 
 Eine Ansicht öffnen, Start drücken und Mikrofon erlauben. Sprechen und etwa eine Sekunde pausieren. Während der Wiedergabe und des kurzen Hallausklangs werden keine neuen Sätze aufgenommen. Stop beendet Wiedergabe und Mikrofonzugriff und verwirft die Aufnahme.

@@ -2,13 +2,15 @@
 <html lang="de">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f5f2e9">
+<meta name="theme-color" content="#000000">
 <title>Plapper · Dein kleiner Papagei</title>
 <link rel="stylesheet" href="style.css">
+<body class="production-page">
 <main class="production-view">
   <section class="card" aria-label="Nachplappernder Papagei">
     <div id="voice-ring" class="voice-ring" aria-hidden="true">
-      <svg viewBox="-30 -30 380 380" focusable="false">
+      <svg viewBox="0 0 800 600" focusable="false">
+        <g class="worm-tail"></g>
         <path class="ring-main" d="M248,160a88,88 0 1,0 -176,0a88,88 0 1,0 176,0Z"/>
         <path class="ring-echo" d="M255,160a95,95 0 1,0 -190,0a95,95 0 1,0 190,0Z"/>
         <path class="ring-halo" d="M262,160a102,102 0 1,0 -204,0a102,102 0 1,0 204,0Z"/>
@@ -20,4 +22,5 @@
   </section>
 </main>
 <script type="module" src="app.js"></script>
+</body>
 </html>
