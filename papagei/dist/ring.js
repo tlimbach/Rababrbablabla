@@ -10,8 +10,8 @@ export function createVoiceRing(element) {
   });
   // Sample one continuous route at delayed times, so the tail follows the head.
   const position = time => ({
-    x: 400 + 140 * Math.sin(time * .23) + 30 * Math.sin(time * .49 + 1),
-    y: 300 + 55 * Math.sin(time * .31 + .7) + 15 * Math.cos(time * .57)
+    x: 400 + 65 * Math.sin(time * .23) + 20 * Math.sin(time * .49 + 1),
+    y: 300 + 20 * Math.sin(time * .31 + .7) + 8 * Math.cos(time * .57)
   });
   const contour = (center, radius, time, strength, layer = 0) => {
     let d = '';
@@ -46,7 +46,7 @@ export function createVoiceRing(element) {
     const breath = Math.sin(time * (2 * Math.PI / 5));
     const breathDepth = 11 * (1 - energy) + 2 * energy;
     const radius = (88 + energy * 52 + breath * breathDepth) * .825;
-    const headRadius = radius * 1.5;
+    const headRadius = radius * 2.25;
     const head = position(time);
     // Draw the narrow tip first, then overlapping sections toward the head.
     for (let j = 0; j < segments.length; j++) {
