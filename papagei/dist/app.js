@@ -1,4 +1,4 @@
-import { createVoiceRing } from './ring.js?v=d4dada8b890f';
+import { createVoiceRing } from './ring.js?v=ee4eca963b0c';
 import { startAutoUpdates } from './updates.js?v=db8f300c6248';
 import { raisePitch } from './pitch.js';
 import { createHallEffect, createDistortionEffect } from './effects.js';

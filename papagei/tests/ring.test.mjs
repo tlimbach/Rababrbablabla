@@ -53,7 +53,7 @@ for (const reduced of [false, true]) {
     assert.ok(Number(scene.highlight.style.opacity) > .85);
     assert.equal(scene.highlight.getAttribute('d'), scene.head.getAttribute('d'));
     assert.equal(scene.highlight.getAttribute('vector-effect'), 'non-scaling-stroke');
-    if (reduced) assert.equal(scene.head.getAttribute('d'), quietShape);
+    assert.notEqual(scene.head.getAttribute('d'), quietShape);
     scene.step(undefined, 120);
     assert.ok(Number(scene.highlight.style.opacity) < .01);
     assert.equal(scene.tail.children.length, 36);

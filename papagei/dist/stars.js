@@ -2,7 +2,6 @@ const canvas = document.querySelector('#starfield');
 const ctx = canvas?.getContext('2d');
 
 if (ctx) {
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let width = 0, height = 0, stars = [], frame = 0, last = 0;
   const random = (min, max) => min + Math.random() * (max - min);
   function makeStar(scatteredAge = false) {
@@ -25,9 +24,9 @@ if (ctx) {
   function paint(dt) {
     ctx.clearRect(0, 0, width, height);
     stars.forEach((star, i) => {
-      if (!motion.matches) star.age += dt;
+      star.age += dt;
       if (star.age >= star.life) star = stars[i] = makeStar();
-      if (!motion.matches && dt > 0 && width > 0 && height > 0) {
+      if (dt > 0 && width > 0 && height > 0) {
         // Shared rotation plus a diagonal drift; nearer stars move faster.
         const px = star.x * width, py = star.y * height;
         // A gentle coherent orbit, with a little drift.
@@ -44,9 +43,9 @@ if (ctx) {
         star.y = wrap(py + dy, height) / height;
       }
       // Most of the lifetime is clearly visible; short transitions make turnover noticeable.
-      const fade = motion.matches ? .75 : Math.max(0, Math.min(1,
+      const fade = Math.max(0, Math.min(1,
         star.age / star.fadeIn, (star.life - star.age) / star.fadeOut));
-      const shimmer = motion.matches ? 1 : .9 + .1 * Math.sin(star.age * .7 + star.phase);
+      const shimmer = .9 + .1 * Math.sin(star.age * .7 + star.phase);
       const alpha = star.brightness * fade * shimmer;
       const x = star.x * width, y = star.y * height;
       if (star.radius > 1.2) {
@@ -72,7 +71,7 @@ if (ctx) {
     cancelAnimationFrame(frame); last = 0;
     if (document.hidden) return;
     paint(0);
-    if (!motion.matches) frame = requestAnimationFrame(tick);
+    frame = requestAnimationFrame(tick);
   }
   function resize() {
     width = window.innerWidth; height = window.innerHeight;
@@ -88,6 +87,5 @@ if (ctx) {
   document.addEventListener('visibilitychange', resume);
   window.addEventListener('pagehide', () => cancelAnimationFrame(frame));
   window.addEventListener('pageshow', resume);
-  motion.addEventListener('change', resume);
   resize(); resume();
 }

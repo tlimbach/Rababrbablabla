@@ -43,7 +43,6 @@ export function createVoiceRing(element) {
     }
     return d + 'Z';
   };
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let state = 'idle', inputLevel = 0, inputAt = 0, analyser = null, samples;
   let level = 0, frame = 0, previousTime = 0, elapsed = 0;
   function draw(now) {
@@ -58,11 +57,10 @@ export function createVoiceRing(element) {
     const target = Math.min(1, Math.sqrt(Math.max(0, rms - .003) * 8));
     // Fast attack and slower release keep the response fluid.
     level += (target - level) * (1 - Math.exp(-dt / (target > level ? .045 : .24)));
-    if (!reducedMotion.matches) elapsed += dt;
-    const time = reducedMotion.matches ? 0 : elapsed;
-    const energy = reducedMotion.matches ? 0 : level;
+    elapsed += dt;
+    const time = elapsed;
+    const energy = level;
     // Brighten the head with the measured microphone or playback level.
-    // Reduced motion freezes geometry, but keeps the audio feedback available.
     const glow = level;
     highlight.style.opacity = (glow * .95).toFixed(3);
     highlight.style.strokeWidth = (1 + glow * 2).toFixed(2);
