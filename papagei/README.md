@@ -32,6 +32,8 @@ Zufallsbereiche: Geschwindigkeit 0,75–0,90 (in 0,05-Schritten), Tonhöhe +12�
 
 Aktueller Browser mit AudioWorklet erforderlich; Mikrofonzugriff braucht localhost oder HTTPS. Die Lautstärkeerkennung funktioniert am besten in ruhiger Umgebung. Sätze werden auf höchstens 20 Sekunden begrenzt. Keine Spracherkennung, kein Server für Audio.
 
+Beim Laden und bei der Rückkehr zur Seite wird die HTML-Einstiegsseite ohne Cache geprüft. Haben sich die eingebundenen Skript- oder Stylesheet-Versionen geändert, lädt die App die neue Seite automatisch. Eine laufende Audiositzung wird erst nach Stop aktualisiert. Das gilt auch beim Öffnen über den Homebildschirm; eine ältere Version ohne diese Prüfung muss einmal regulär neu geladen werden. Bei Änderungen weiterhin die `?v=`-Version der betroffenen Dateien und ihrer importierenden Skripte bis zur HTML-Seite aktualisieren.
+
 Prüfungen: `node --test tests/*.test.mjs`
 
 Manuell prüfen: Mikrofon erlauben/ablehnen; Satz und Sprechpause; denselben Satz bei verschiedenen Reglerstellungen wiederholen; Hall/Verzerrung live ändern; Stop während Aufnahme, Wiedergabe und Hallausklang; erneut starten. Sprachqualität und Layout müssen im Browser geprüft werden.

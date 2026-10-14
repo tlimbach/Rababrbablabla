@@ -1,4 +1,5 @@
-import { createVoiceRing } from './ring.js?v=8a830aea4cdb';
+import { createVoiceRing } from './ring.js?v=d4dada8b890f';
+import { startAutoUpdates } from './updates.js?v=db8f300c6248';
 import { raisePitch } from './pitch.js';
 import { createHallEffect, createDistortionEffect } from './effects.js';
 const start = document.querySelector('#start'), stop = document.querySelector('#stop');
@@ -9,6 +10,7 @@ const replay = document.querySelector('#replay');
 const ringElement = document.querySelector('#voice-ring');
 const ring = createVoiceRing(ringElement);
 let playbackAnalyser;
+const updates = startAutoUpdates(() => state === 'idle');
 const defaults = { speed: .8, pitch: 4, hall: 0, distortion: 0 };
 const controls = Object.fromEntries(Object.entries(defaults).map(([id, value]) =>
   [id, document.getElementById(id) ?? { value }]));
@@ -38,6 +40,7 @@ function show(next, text, detail) {
   state = next; document.body.dataset.state = next; status.textContent = text;
   ring.setState(next);
   if (detail) hint.textContent = detail;
+  updates.applyPending();
 }
 function resetPhrase() { frames = []; preRoll = []; speaking = false; silence = voiced = duration = 0; }
 function cleanup() {

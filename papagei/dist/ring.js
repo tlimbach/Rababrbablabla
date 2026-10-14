@@ -2,6 +2,15 @@
 export function createVoiceRing(element) {
   if (!element) return { setState() {}, setInputLevel() {}, setAnalyser() {}, reset() {} };
   const paths = [...element.querySelectorAll('svg > path')];
+  // A real white stroke remains visible even when mobile SVG filters are faint.
+  // Keep its width in screen pixels as the whole worm shrinks on a phone.
+  const highlight = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  highlight.setAttribute('class', 'ring-highlight');
+  highlight.setAttribute('vector-effect', 'non-scaling-stroke');
+  highlight.style.stroke = '#fff';
+  highlight.style.fill = 'none';
+  highlight.style.opacity = '0';
+  paths[0].parentNode.appendChild(highlight);
   const tail = element.querySelector('.worm-tail');
   const segments = Array.from({ length: 36 }, () => {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -53,7 +62,10 @@ export function createVoiceRing(element) {
     const time = reducedMotion.matches ? 0 : elapsed;
     const energy = reducedMotion.matches ? 0 : level;
     // Brighten the head with the measured microphone or playback level.
-    const glow = reducedMotion.matches ? 0 : level;
+    // Reduced motion freezes geometry, but keeps the audio feedback available.
+    const glow = level;
+    highlight.style.opacity = (glow * .95).toFixed(3);
+    highlight.style.strokeWidth = (1 + glow * 2).toFixed(2);
     paths[0].style.filter = `brightness(${(1 + glow * 1.5).toFixed(2)}) drop-shadow(0 0 ${4 + glow * 5}px currentColor) drop-shadow(0 0 ${12 + glow * 18}px currentColor) drop-shadow(0 0 ${24 + glow * 32}px currentColor)`;
     paths[0].style.strokeWidth = (3.2 + glow * 2.8).toFixed(2);
 
@@ -76,6 +88,7 @@ export function createVoiceRing(element) {
     for (let layer = 0; layer < paths.length; layer++) {
       paths[layer].setAttribute('d', contour(head, headRadius + layer * 9, time, (3 + energy * 16) * 2.25, layer));
     }
+    highlight.setAttribute('d', paths[0].getAttribute('d'));
     frame = requestAnimationFrame(draw);
   }
   function resume() {
